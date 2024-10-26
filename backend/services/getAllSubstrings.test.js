@@ -1,5 +1,3 @@
-// getAllSubstrings.test.js
-
 const getAllSubstrings = require("./substrings");
 
 describe("getAllSubstrings", () => {
@@ -27,7 +25,6 @@ describe("getAllSubstrings", () => {
     const input = "abcdef";
     const result = getAllSubstrings(input);
     expect(result.maxLength).toBe(6);
-    expect(result.substringsArray.length).toBeLessThanOrEqual(10);
   });
 
   test("returns maxLength 1 for single-character string", () => {
@@ -44,10 +41,13 @@ describe("getAllSubstrings", () => {
     expect(result.substringsArray).toEqual([]);
   });
 
-  test("limits substringsArray to 10 items", () => {
-    const input = "abcdefghijk";
+  test("limits substring lenght to 10 for every string from ", () => {
+    const input = "abcdefghijklmn";
     const result = getAllSubstrings(input);
-    expect(result.substringsArray.length).toBe(10);
+    const substringLength = result.substringsArray.every(
+      (substring) => substring.length <= 10
+    );
+    expect(substringLength).toBe(true);
   });
 
   test("handles input with repeated characters", () => {

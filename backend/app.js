@@ -17,6 +17,9 @@ app.get("/healthcheck", (req, res) => {
 
 app.use("/dsa", dsaRoute);
 
-app.listen(port, () => {
-  console.log(`Server running on port: ${port}`);
-});
+process.env.NODE_ENV !== "test" &&
+  app.listen(port, () => {
+    console.log(`Server running on port: ${port}`);
+  });
+
+module.exports = app;

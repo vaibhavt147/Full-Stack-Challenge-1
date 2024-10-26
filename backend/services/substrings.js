@@ -1,28 +1,27 @@
 const getAllSubstrings = (s) => {
   const n = s.length;
   let maxLength = 0;
-  const charSet = new Set();
-  const substringsUnique = new Set();
-  let left = 0;
+  const uniqueSubstrings = new Set();
+  for (let start = 0; start < s.length; start++) {
+    const seen = new Set();
+    let currentSubstring = "";
+    for (let end = start; end < s.length; end++) {
+      const char = s[end];
 
-  for (let right = 0; right < n; right++) {
-    while (charSet.has(s[right])) {
-      charSet.delete(s[left]);
-      left += 1;
-      right > left && substringsUnique.add(s.slice(left, right));
+      if (seen.has(char)) {
+        break;
+      }
+
+      seen.add(char);
+      currentSubstring += char;
+      uniqueSubstrings.add(currentSubstring);
+      maxLength = Math.max(maxLength, currentSubstring.length);
     }
-    charSet.add(s[right]);
-    maxLength = Math.max(maxLength, right - left + 1);
-    right + 1 > left && substringsUnique.add(s.slice(left, right + 1));
-  }
-  while (left < n) {
-    substringsUnique.add(s.slice(left, n));
-    left += 1;
   }
 
-  const substringsArray = Array.from(substringsUnique)
-    .sort((a, b) => a.length - b.length || a.localeCompare(b))
-    .slice(0, 10);
+  const substringsArray = Array.from(uniqueSubstrings)
+    .filter((s) => s.length <= 10)
+    .sort((a, b) => a.length - b.length || a.localeCompare(b));
 
   return { maxLength, substringsArray };
 };
