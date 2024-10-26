@@ -5,11 +5,17 @@ import { getLongestSubstring } from "../services/apiService";
 const LongestSubstring = () => {
   const [input, setInput] = useState("");
   const [maxLength, setMaxLength] = useState(0);
+  const [maxSubstring, setMaxSubstring] = useState("");
   const [list, setList] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
+    if (list?.length > 0) {
+      setList([]);
+      setMaxSubstring("");
+      setMaxLength(0);
+    }
     setInput(e.target.value);
     setError("");
   };
@@ -18,8 +24,21 @@ const LongestSubstring = () => {
     [input]
   );
 
+  const startIdx = useMemo(
+    () => input.indexOf(maxSubstring),
+    [maxSubstring, input]
+  );
+  const beforeMatch = useMemo(
+    () => input.slice(0, startIdx),
+    [input, startIdx]
+  );
+  const afterMatch = useMemo(
+    () => input.slice(startIdx + maxSubstring.length),
+    [input, startIdx, maxSubstring.length]
+  );
+
   const handleSubmit = async () => {
-    setLoading(true); // Show loader
+    setLoading(true);
 
     try {
       const response = await getLongestSubstring({ inputString: input });
@@ -27,6 +46,7 @@ const LongestSubstring = () => {
       if (response) {
         setMaxLength(response.maxLength);
         setList(response.substringsArray);
+        setMaxSubstring(response.maxSubString);
       } else {
         setError("No data found.");
       }
@@ -73,6 +93,11 @@ const LongestSubstring = () => {
       {error && <div className="alert alert-danger mt-3">{error}</div>}
       {list.length > 0 && (
         <>
+          <h3>
+            Given String is: {beforeMatch}
+            <span className="highlight">{maxSubstring}</span>
+            {afterMatch}
+          </h3>
           <h3 className="mt-3">
             The length of the longest substring without repeating characters:{" "}
             {maxLength}

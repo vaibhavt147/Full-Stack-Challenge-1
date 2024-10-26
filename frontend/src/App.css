@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.highlight {
+  background-color: #0d6efd; /* Pink color */
+  font-weight: bold;
+  color: white;
+  border-radius: 3px;
+  padding: 0 2px;
+}
+
+.result-text {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
