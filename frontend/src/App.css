@@ -49,3 +49,33 @@
   font-size: 1.2rem;
   line-height: 1.5;
 }
+
+/* BinaryTree.css */
+
+/* Container for the tree node cards */
+.tree-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+/* Style for each individual card */
+.tree-card {
+  width: 150px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+/* Button styles for adding nodes */
+.add-btn {
+  margin: 5px;
+}
+
+/* Vertical and horizontal connectors between nodes */
+.connector {
+  height: 20px;
+  width: 2px;
+  background-color: #ccc;
+  margin: 10px 0;
+}
